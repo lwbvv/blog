@@ -6,6 +6,15 @@
   {% seo %}
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% feed_meta %}
+  <script>
+    // 첫 페인트 전에 테마를 적용해 깜빡임(FOUC) 방지
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -17,6 +26,7 @@
         <a href="{{ '/search/' | relative_url }}">검색</a>
         <a href="{{ '/about/' | relative_url }}">소개</a>
         <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="테마 전환" title="라이트/다크 모드 전환"></button>
       </nav>
     </div>
   </header>
@@ -30,5 +40,7 @@
       <p>&copy; {{ site.time | date: "%Y" }} {{ site.author.name }}. Jekyll로 만들었습니다.</p>
     </div>
   </footer>
+
+  <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
 </body>
 </html>

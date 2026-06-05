@@ -2,12 +2,46 @@
 # 앞의 빈 머리말은 Jekyll이 이 파일을 SCSS로 처리하게 합니다.
 ---
 
-// ===== 변수 =====
-$accent: #2b6cb0;
-$text: #1a202c;
-$muted: #718096;
-$border: #e2e8f0;
-$bg: #ffffff;
+// ===== 테마 색상 (CSS 변수) =====
+:root {
+  --accent: #2b6cb0;
+  --text: #1a202c;
+  --excerpt: #2d3748;
+  --muted: #718096;
+  --border: #e2e8f0;
+  --bg: #ffffff;
+  --code-bg: #f1f5f9;
+  --pre-bg: #1a202c;
+  --pre-text: #e2e8f0;
+  --quote-bg: #f7fafc;
+  --th-bg: #f7fafc;
+  --accent-soft: rgba(43, 108, 176, 0.12);
+}
+
+// 다크 색상 정의 (믹스인처럼 재사용)
+@mixin dark-theme {
+  --accent: #63b3ed;
+  --text: #e2e8f0;
+  --excerpt: #cbd5e0;
+  --muted: #9aa5b1;
+  --border: #2d3748;
+  --bg: #0f1419;
+  --code-bg: #1e293b;
+  --pre-bg: #0b1020;
+  --pre-text: #e2e8f0;
+  --quote-bg: #1a202c;
+  --th-bg: #1a202c;
+  --accent-soft: rgba(99, 179, 237, 0.18);
+}
+
+// 사용자가 명시적으로 다크 선택
+:root[data-theme="dark"] { @include dark-theme; }
+// OS가 다크이고 사용자가 라이트를 명시하지 않은 경우
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { @include dark-theme; }
+}
+
+// ===== 정적 변수 =====
 $max-width: 720px;
 $font: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
        "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
@@ -22,10 +56,11 @@ body {
   font-family: $font;
   font-size: 17px;
   line-height: 1.75;
-  color: $text;
-  background: $bg;
+  color: var(--text);
+  background: var(--bg);
   word-break: keep-all;
   overflow-wrap: break-word;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .wrap {
@@ -34,26 +69,54 @@ body {
   padding: 0 20px;
 }
 
-a { color: $accent; text-decoration: none; }
+a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 // ===== 헤더 =====
 .site-header {
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid var(--border);
   padding: 18px 0;
   .wrap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 }
 .site-title {
   font-weight: 700;
   font-size: 1.25rem;
-  color: $text;
+  color: var(--text);
 }
-.site-nav a {
+.site-nav {
+  display: flex;
+  align-items: center;
+  a {
+    margin-left: 18px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+}
+
+// ===== 테마 토글 버튼 =====
+.theme-toggle {
   margin-left: 18px;
-  color: $muted;
-  font-size: 0.95rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  &:hover { border-color: var(--accent); }
+  &::after { content: "🌙"; }
 }
-.site-nav a:first-child { margin-left: 0; }
+:root[data-theme="dark"] .theme-toggle::after { content: "☀️"; }
+:root[data-theme="light"] .theme-toggle::after { content: "🌙"; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle::after { content: "☀️"; }
+}
 
 // ===== 본문 =====
 .content { padding: 40px 20px 60px; }
@@ -61,25 +124,25 @@ a:hover { text-decoration: underline; }
 .intro {
   text-align: center;
   padding: 24px 0 40px;
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid var(--border);
   margin-bottom: 40px;
   h1 { margin: 0 0 8px; font-size: 2rem; }
-  .tagline { color: $muted; margin: 0; }
+  .tagline { color: var(--muted); margin: 0; }
 }
 
 // ===== 글 목록 =====
 .post-preview {
   padding-bottom: 32px;
   margin-bottom: 32px;
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid var(--border);
   h2 { margin: 0 0 6px; font-size: 1.4rem; }
   &:last-child { border-bottom: none; }
 }
-.post-meta { color: $muted; font-size: 0.875rem; margin: 0 0 10px; }
-.excerpt { margin: 0 0 10px; color: #2d3748; }
+.post-meta { color: var(--muted); font-size: 0.875rem; margin: 0 0 10px; }
+.excerpt { margin: 0 0 10px; color: var(--excerpt); }
 .read-more { font-size: 0.9rem; }
 
-.tag { color: $accent; font-size: 0.85rem; margin-right: 4px; }
+.tag { color: var(--accent); font-size: 0.85rem; margin-right: 4px; }
 
 // ===== 글 본문 =====
 .post-header { margin-bottom: 32px; }
@@ -92,20 +155,20 @@ a:hover { text-decoration: underline; }
   blockquote {
     margin: 1.5em 0;
     padding: 0.2em 1.2em;
-    border-left: 4px solid $accent;
-    color: $muted;
-    background: #f7fafc;
+    border-left: 4px solid var(--accent);
+    color: var(--muted);
+    background: var(--quote-bg);
   }
   code {
     font-family: $mono;
     font-size: 0.9em;
-    background: #f1f5f9;
+    background: var(--code-bg);
     padding: 2px 6px;
     border-radius: 4px;
   }
   pre {
-    background: #1a202c;
-    color: #e2e8f0;
+    background: var(--pre-bg);
+    color: var(--pre-text);
     padding: 16px 18px;
     border-radius: 8px;
     overflow-x: auto;
@@ -115,8 +178,8 @@ a:hover { text-decoration: underline; }
     width: 100%;
     border-collapse: collapse;
     margin: 1.5em 0;
-    th, td { border: 1px solid $border; padding: 8px 12px; text-align: left; }
-    th { background: #f7fafc; }
+    th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+    th { background: var(--th-bg); }
   }
 }
 
@@ -127,15 +190,15 @@ a:hover { text-decoration: underline; }
   align-items: center;
   margin-top: 48px;
   padding-top: 24px;
-  border-top: 1px solid $border;
+  border-top: 1px solid var(--border);
   font-size: 0.95rem;
   gap: 16px;
 }
-.page-number { color: $muted; }
+.page-number { color: var(--muted); }
 .post-nav .next { margin-left: auto; text-align: right; }
 
 .cat {
-  color: $accent;
+  color: var(--accent);
   font-size: 0.85rem;
   margin-right: 6px;
   font-weight: 600;
@@ -148,17 +211,19 @@ a:hover { text-decoration: underline; }
   padding: 12px 16px;
   font-size: 1rem;
   font-family: inherit;
-  border: 1px solid $border;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 8px;
   outline: none;
-  &:focus { border-color: $accent; box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.12); }
+  &:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 }
-.search-status { color: $muted; font-size: 0.9rem; margin: 0 0 20px; }
+.search-status { color: var(--muted); font-size: 0.9rem; margin: 0 0 20px; }
 .search-results { list-style: none; padding: 0; margin: 0; }
 .search-result {
   padding-bottom: 24px;
   margin-bottom: 24px;
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid var(--border);
   a { font-size: 1.2rem; font-weight: 600; }
   &:last-child { border-bottom: none; }
 }
@@ -174,22 +239,22 @@ a:hover { text-decoration: underline; }
   li a {
     display: inline-block;
     padding: 6px 14px;
-    border: 1px solid $border;
+    border: 1px solid var(--border);
     border-radius: 999px;
-    color: $text;
+    color: var(--text);
     font-size: 0.9rem;
-    &:hover { border-color: $accent; color: $accent; text-decoration: none; }
+    &:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
   }
 }
 .count {
-  color: $muted;
+  color: var(--muted);
   font-size: 0.8em;
   font-weight: 400;
 }
 .category-group {
   margin-bottom: 40px;
   scroll-margin-top: 20px;
-  h2 { border-bottom: 2px solid $border; padding-bottom: 8px; }
+  h2 { border-bottom: 2px solid var(--border); padding-bottom: 8px; }
 }
 .archive-list {
   list-style: none;
@@ -201,24 +266,24 @@ a:hover { text-decoration: underline; }
     align-items: baseline;
     gap: 12px;
     padding: 8px 0;
-    border-bottom: 1px solid $border;
+    border-bottom: 1px solid var(--border);
   }
-  time { color: $muted; font-size: 0.85rem; white-space: nowrap; }
+  time { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }
 }
 
 // ===== 댓글 =====
 .comments {
   margin-top: 56px;
   padding-top: 24px;
-  border-top: 1px solid $border;
+  border-top: 1px solid var(--border);
   h2 { font-size: 1.3rem; margin-bottom: 16px; }
 }
 
 // ===== 푸터 =====
 .site-footer {
-  border-top: 1px solid $border;
+  border-top: 1px solid var(--border);
   padding: 24px 0;
-  color: $muted;
+  color: var(--muted);
   font-size: 0.85rem;
   text-align: center;
 }
