@@ -2,6 +2,7 @@
 layout: post
 title: "마크다운으로 빠르게 글쓰기"
 date: 2026-05-20 14:30:00 +0900
+categories: [개발]
 tags: [마크다운, 팁]
 ---
 

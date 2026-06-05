@@ -1,0 +1,33 @@
+---
+layout: default
+title: 카테고리
+permalink: /categories/
+---
+<section class="intro">
+  <h1>카테고리</h1>
+  <p class="tagline">주제별로 글을 모아봤습니다</p>
+</section>
+
+{% if site.categories.size == 0 %}
+  <p>아직 카테고리가 없습니다.</p>
+{% else %}
+  <ul class="category-index">
+    {% for category in site.categories %}
+      <li><a href="#{{ category[0] }}">{{ category[0] }}</a> <span class="count">{{ category[1].size }}</span></li>
+    {% endfor %}
+  </ul>
+
+  {% for category in site.categories %}
+    <section class="category-group" id="{{ category[0] }}">
+      <h2>{{ category[0] }} <span class="count">{{ category[1].size }}</span></h2>
+      <ul class="archive-list">
+        {% for post in category[1] %}
+          <li>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y.%m.%d" }}</time>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endfor %}
+{% endif %}

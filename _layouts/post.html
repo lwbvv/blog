@@ -6,6 +6,10 @@ layout: default
     <h1 class="post-title">{{ page.title }}</h1>
     <p class="post-meta">
       <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %-m월 %-d일" }}</time>
+      {% if page.categories.size > 0 %}
+        ·
+        {% for cat in page.categories %}<a class="cat" href="{{ '/categories/#' | append: cat | relative_url }}">{{ cat }}</a>{% endfor %}
+      {% endif %}
       {% if page.tags.size > 0 %}
         ·
         {% for tag in page.tags %}<span class="tag">#{{ tag }}</span>{% endfor %}
@@ -25,4 +29,6 @@ layout: default
       <a class="next" href="{{ page.next.url | relative_url }}">{{ page.next.title }} →</a>
     {% endif %}
   </nav>
+
+  {% include comments.html %}
 </article>
