@@ -8,8 +8,9 @@ author:
 lang: ko-KR
 timezone: Asia/Seoul
 
-# 배포 시 실제 도메인으로 바꾸세요 (예: https://username.github.io)
-url: ""
+# 운영 도메인. baseurl은 비워두고(로컬 개발 편의),
+# GitHub Actions 빌드 시 --baseurl "/blog" 로 자동 주입됩니다.
+url: "https://lwbvv.github.io"
 baseurl: ""
 
 # Build
