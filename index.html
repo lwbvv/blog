@@ -1,0 +1,32 @@
+---
+layout: default
+---
+<section class="intro">
+  <h1>{{ site.title }}</h1>
+  <p class="tagline">{{ site.tagline }}</p>
+</section>
+
+<section class="post-list">
+  {% for post in paginator.posts %}
+    <article class="post-preview">
+      <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+      <p class="post-meta">
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time>
+      </p>
+      <p class="excerpt">{{ post.excerpt | strip_html | truncate: 140 }}</p>
+      <a class="read-more" href="{{ post.url | relative_url }}">계속 읽기 →</a>
+    </article>
+  {% endfor %}
+</section>
+
+{% if paginator.total_pages > 1 %}
+<nav class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | relative_url }}">← 이전</a>
+  {% endif %}
+  <span class="page-number">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | relative_url }}">다음 →</a>
+  {% endif %}
+</nav>
+{% endif %}

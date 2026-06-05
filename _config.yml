@@ -1,0 +1,43 @@
+title: Lee's Nest
+tagline: 기록하고, 배우고, 나눕니다
+description: >-
+  생각과 배움을 기록하는 개인 블로그입니다.
+author:
+  name: ichiwon
+  email: lwbvvbusiness@gmail.com
+lang: ko-KR
+timezone: Asia/Seoul
+
+# 배포 시 실제 도메인으로 바꾸세요 (예: https://username.github.io)
+url: ""
+baseurl: ""
+
+# Build
+permalink: /:year/:month/:day/:title/
+paginate: 5
+paginate_path: "/page:num/"
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+
+# 글 기본값
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - README.md
+  - .sass-cache
+  - .jekyll-cache
+
+sass:
+  style: compressed

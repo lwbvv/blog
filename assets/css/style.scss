@@ -1,0 +1,150 @@
+---
+# 앞의 빈 머리말은 Jekyll이 이 파일을 SCSS로 처리하게 합니다.
+---
+
+// ===== 변수 =====
+$accent: #2b6cb0;
+$text: #1a202c;
+$muted: #718096;
+$border: #e2e8f0;
+$bg: #ffffff;
+$max-width: 720px;
+$font: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
+       "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+$mono: "SFMono-Regular", "D2Coding", Consolas, Menlo, monospace;
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: $font;
+  font-size: 17px;
+  line-height: 1.75;
+  color: $text;
+  background: $bg;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.wrap {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+a { color: $accent; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+// ===== 헤더 =====
+.site-header {
+  border-bottom: 1px solid $border;
+  padding: 18px 0;
+  .wrap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+}
+.site-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: $text;
+}
+.site-nav a {
+  margin-left: 18px;
+  color: $muted;
+  font-size: 0.95rem;
+}
+.site-nav a:first-child { margin-left: 0; }
+
+// ===== 본문 =====
+.content { padding: 40px 20px 60px; }
+
+.intro {
+  text-align: center;
+  padding: 24px 0 40px;
+  border-bottom: 1px solid $border;
+  margin-bottom: 40px;
+  h1 { margin: 0 0 8px; font-size: 2rem; }
+  .tagline { color: $muted; margin: 0; }
+}
+
+// ===== 글 목록 =====
+.post-preview {
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid $border;
+  h2 { margin: 0 0 6px; font-size: 1.4rem; }
+  &:last-child { border-bottom: none; }
+}
+.post-meta { color: $muted; font-size: 0.875rem; margin: 0 0 10px; }
+.excerpt { margin: 0 0 10px; color: #2d3748; }
+.read-more { font-size: 0.9rem; }
+
+.tag { color: $accent; font-size: 0.85rem; margin-right: 4px; }
+
+// ===== 글 본문 =====
+.post-header { margin-bottom: 32px; }
+.post-title { font-size: 2rem; line-height: 1.3; margin: 0 0 10px; }
+
+.post-content {
+  h2 { margin-top: 2em; font-size: 1.5rem; }
+  h3 { margin-top: 1.6em; font-size: 1.2rem; }
+  img { max-width: 100%; height: auto; border-radius: 6px; }
+  blockquote {
+    margin: 1.5em 0;
+    padding: 0.2em 1.2em;
+    border-left: 4px solid $accent;
+    color: $muted;
+    background: #f7fafc;
+  }
+  code {
+    font-family: $mono;
+    font-size: 0.9em;
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  pre {
+    background: #1a202c;
+    color: #e2e8f0;
+    padding: 16px 18px;
+    border-radius: 8px;
+    overflow-x: auto;
+    code { background: none; padding: 0; color: inherit; }
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5em 0;
+    th, td { border: 1px solid $border; padding: 8px 12px; text-align: left; }
+    th { background: #f7fafc; }
+  }
+}
+
+// ===== 페이지네이션 / 글 이동 =====
+.pagination, .post-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid $border;
+  font-size: 0.95rem;
+  gap: 16px;
+}
+.page-number { color: $muted; }
+.post-nav .next { margin-left: auto; text-align: right; }
+
+// ===== 푸터 =====
+.site-footer {
+  border-top: 1px solid $border;
+  padding: 24px 0;
+  color: $muted;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+// ===== 반응형 =====
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .post-title, .intro h1 { font-size: 1.6rem; }
+}
